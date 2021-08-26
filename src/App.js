@@ -7,7 +7,7 @@ import Meals from './pages/meals/Meals';
 import FoodExplorer from './pages/meals/FoodExplorer';
 import FoodExplorerByIngredients from './pages/meals/FoodExplorerByIngredients';
 import FoodExplorerByCountry from './pages/meals/FoodExplorerByCountry';
-import FoodRecipes from './pages/meals/FoodRecipes';
+import MealDetail from './pages/meals/MealDetail';
 import Drinks from './pages/drinks/Drinks';
 import DrinkExplorer from './pages/drinks/DrinkExplorer';
 import DrinkExplorerByIngredients from './pages/drinks/DrinkExplorerByIngredients';
@@ -35,7 +35,7 @@ function App() {
       <Route exact path="/explorar/comidas/area" component={ FoodExplorerByCountry } />
       <Route exact path="/comidas" component={ Meals } />
       <Route exact path="/bebidas" component={ Drinks } />
-      <Route exact path="/comidas/:id" component={ FoodRecipes } />
+      <Route exact path="/comidas/:id" component={ MealDetail } />
       <Route exact path="/bebidas/:id" component={ DrinkRecipes } />
       <Route exact path="/receitas-feitas" component={ DoneRecipes } />
       <Route exact path="/receitas-favoritas" component={ FavoriteRecipes } />

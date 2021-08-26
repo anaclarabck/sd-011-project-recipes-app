@@ -1,10 +1,16 @@
 import React from 'react';
-import DrinkDetailCard from '../../components/DrinkDetailCard';
+import PropTypes from 'prop-types';
+import DetailCard from '../../components/DetailCard';
 
-export default function DrinkRecipes() {
+export default function DrinkRecipes({ location }) {
+  const { state } = location;
   return (
     <div>
-      <DrinkDetailCard />
+      <DetailCard recipe={ state } />
     </div>
   );
 }
+
+DrinkRecipes.propTypes = {
+  location: PropTypes.string,
+}.isRequired;

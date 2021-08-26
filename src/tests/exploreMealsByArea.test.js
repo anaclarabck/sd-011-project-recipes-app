@@ -1,10 +1,10 @@
 import React from 'react';
 import { act } from 'react-dom/test-utils';
 import { cleanup, fireEvent, render, screen } from '@testing-library/react';
-import { SearchBarProvider } from '../context/SearchBar';
+import { CardListProvider } from '../context/CardListContext';
 import areas from '../../cypress/mocks/areas';
 import meals from '../../cypress/mocks/meals';
-import FoodExplorerByCountry from '../pages/foods/FoodExplorerByCountry';
+import FoodExplorerByCountry from '../pages/meals/FoodExplorerByCountry';
 
 const PROFILE_TOP_BTN = 'profile-top-btn';
 const SEARCH_TOP_BTN = 'search-top-btn';
@@ -34,14 +34,14 @@ describe('Testa a tela <FoodExplorerByCountry.js />', () => {
   beforeAll(mockFetchAreas, mockFetchMeals);
   beforeEach(cleanup);
   it('A tela de explorer origem possui header', () => {
-    const screenFoods = render(<FoodExplorerByCountry />, { wrapper: SearchBarProvider });
+    const screenFoods = render(<FoodExplorerByCountry />, { wrapper: CardListProvider });
     screenFoods.getByText(/Explorar Origem/);
     screenFoods.getByTestId(PROFILE_TOP_BTN);
     screenFoods.getByTestId(SEARCH_TOP_BTN);
   });
 
   it('A tela de explorer origem possui footer', () => {
-    const screenFoods = render(<FoodExplorerByCountry />, { wrapper: SearchBarProvider });
+    const screenFoods = render(<FoodExplorerByCountry />, { wrapper: CardListProvider });
     screenFoods.getByTestId(FOOD_BOTTOM_BTN);
     screenFoods.getByTestId(DRINKS_BOTTOM_BTN);
     screenFoods.getByTestId(EXPLORE_BOTTOM_BTN);
@@ -49,7 +49,7 @@ describe('Testa a tela <FoodExplorerByCountry.js />', () => {
 
   it('Possui os cards e selects', async () => {
     await act(async () => {
-      render(<FoodExplorerByCountry />, { wrapper: SearchBarProvider });
+      render(<FoodExplorerByCountry />, { wrapper: CardListProvider });
     });
     expect(await screen.getByTestId('American-option')).toBeInTheDocument();
     expect(await screen.getByTestId('Canadian-option')).toBeInTheDocument();
@@ -68,7 +68,7 @@ describe('Testa a tela <FoodExplorerByCountry.js />', () => {
   });
   it('Possui os botões search', async () => {
     await act(async () => {
-      render(<FoodExplorerByCountry />, { wrapper: SearchBarProvider });
+      render(<FoodExplorerByCountry />, { wrapper: CardListProvider });
     });
     const buttonSearch = await screen.getByTestId(SEARCH_TOP_BTN);
     fireEvent.click(buttonSearch);

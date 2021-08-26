@@ -1,6 +1,6 @@
 import React from 'react';
 import { fireEvent } from '@testing-library/react';
-import FoodExplorer from '../pages/foods/FoodExplorer';
+import FoodExplorer from '../pages/meals/FoodExplorer';
 import renderWithRouter from './renderWithRouter';
 
 describe('Testa a tela <FoodExplorer.js />', () => {

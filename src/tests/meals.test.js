@@ -1,8 +1,8 @@
 import React from 'react';
 import { act } from 'react-dom/test-utils';
 import { cleanup, fireEvent, render, screen } from '@testing-library/react';
-import { SearchBarProvider } from '../context/SearchBar';
-import Foods from '../pages/foods/Foods';
+import { CardListProvider } from '../context/CardListContext';
+import Meals from '../pages/meals/Meals';
 import meals from '../../cypress/mocks/meals';
 import mealsCategories from '../../cypress/mocks/mealCategories';
 
@@ -32,17 +32,17 @@ const mockFetchCategories = () => {
     }));
 };
 
-describe('Testa a tela <Foods.js />', () => {
+describe('Testa a tela <Meals.js />', () => {
   beforeAll(mockFetchMeals, mockFetchCategories);
   beforeEach(cleanup);
   it('A tela de comida possui header', () => {
-    const screenFoods = render(<Foods />, { wrapper: SearchBarProvider }); // pra ilustrar outra forma de renderizar o Foods
+    const screenFoods = render(<Meals />, { wrapper: CardListProvider }); // pra ilustrar outra forma de renderizar o Foods
     screenFoods.getByText(/Explorar Comidas/);
     screenFoods.getByTestId(PROFILE_TOP_BTN);
   });
 
   it('A tela de comida possui footer', () => {
-    const screenFoods = render(<Foods />, { wrapper: SearchBarProvider });
+    const screenFoods = render(<Meals />, { wrapper: CardListProvider });
     screenFoods.getByTestId(FOOD_BOTTOM_BTN);
     screenFoods.getByTestId(DRINKS_BOTTOM_BTN);
     screenFoods.getByTestId(EXPLORE_BOTTOM_BTN);
@@ -50,7 +50,7 @@ describe('Testa a tela <Foods.js />', () => {
 
   it('Possui os cards', async () => {
     await act(async () => {
-      render(<Foods />, { wrapper: SearchBarProvider });
+      render(<Meals />, { wrapper: CardListProvider });
     });
     expect(await screen.getByTestId('Vegetarian-category-filter')).toBeInTheDocument();
     expect(await screen.getByTestId('0-recipe-card')).toBeInTheDocument();
@@ -69,7 +69,7 @@ describe('Testa a tela <Foods.js />', () => {
   });
   it('Possui os botão search', async () => {
     await act(async () => {
-      render(<Foods />, { wrapper: SearchBarProvider });
+      render(<Meals />, { wrapper: CardListProvider });
     });
     const buttonSearch = await screen.getByTestId('search-top-btn');
     fireEvent.click(buttonSearch);

@@ -3,7 +3,7 @@ import { act } from 'react-dom/test-utils';
 import { cleanup, render, screen } from '@testing-library/react';
 import DrinkExplorerByIngredients from '../pages/drinks/DrinkExplorerByIngredients';
 import drinkIngredients from '../../cypress/mocks/drinkIngredients';
-import { SearchBarProvider } from '../context/SearchBar';
+import { CardListProvider } from '../context/CardListContext';
 
 const FOOD_BOTTOM_BTN = 'food-bottom-btn';
 const DRINKS_BOTTOM_BTN = 'drinks-bottom-btn';
@@ -23,13 +23,13 @@ describe('Testa componente <ExploreDrinkByIngredient.js />', () => {
   beforeEach(cleanup);
   it('Possui título correto"', async () => {
     await act(async () => {
-      render(<DrinkExplorerByIngredients />, { wrapper: SearchBarProvider });
+      render(<DrinkExplorerByIngredients />, { wrapper: CardListProvider });
     });
     expect(await screen.getByText('Explorar Ingredientes')).toBeInTheDocument();
   });
   it('Possui Header e Footer', async () => {
     await act(async () => {
-      render(<DrinkExplorerByIngredients />, { wrapper: SearchBarProvider });
+      render(<DrinkExplorerByIngredients />, { wrapper: CardListProvider });
     });
     expect(screen.queryByTestId('profile-top-btn')).toBeInTheDocument();
     expect(screen.queryByTestId('page-title')).toBeInTheDocument();
@@ -41,7 +41,7 @@ describe('Testa componente <ExploreDrinkByIngredient.js />', () => {
 
   it('Possui os cards', async () => {
     await act(async () => {
-      render(<DrinkExplorerByIngredients />, { wrapper: SearchBarProvider });
+      render(<DrinkExplorerByIngredients />, { wrapper: CardListProvider });
     });
     const MAX = 12;
     for (let index = 0; index < MAX; index += 1) {

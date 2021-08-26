@@ -1,7 +1,7 @@
 import React, { useState, useContext, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import { useHistory } from 'react-router-dom';
-import { SearchBarContext } from '../context/SearchBar';
+import { CardListContext } from '../context/CardListContext';
 import fetchByFilter from '../services/data';
 import Cards from './Cards';
 
@@ -11,7 +11,7 @@ export default function SearchBar(props) {
     data,
     setShouldCallCards,
     shouldCallCards,
-  } = useContext(SearchBarContext);
+  } = useContext(CardListContext);
 
   const [input, setInput] = useState('');
   const [radio, setRadio] = useState('');

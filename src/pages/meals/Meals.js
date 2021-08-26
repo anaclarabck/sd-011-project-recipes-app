@@ -1,11 +1,11 @@
 import React, { useContext } from 'react';
 import Header from '../../components/Header';
-import { SearchBarContext } from '../../context/SearchBar';
+import { CardListContext } from '../../context/CardListContext';
 import Footer from '../../components/Footer';
 import CardsList from '../../components/CardsList';
 
-export default function Foods() {
-  const { ingred } = useContext(SearchBarContext);
+export default function Meals() {
+  const { ingred } = useContext(CardListContext);
   return (
     <main>
       <Header title="Explorar Comidas" search filterBar fetchType="themealdb" />

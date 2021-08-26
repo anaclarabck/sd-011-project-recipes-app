@@ -1,12 +1,12 @@
 import React, { useContext, useEffect, useState } from 'react';
 // import { DropdownButton, Dropdown } from 'react-bootstrap';
-import { SearchBarContext } from '../context/SearchBar';
+import { CardListContext } from '../context/CardListContext';
 import fetchByFilter from '../services/data';
 
 export default function FoodExplorerByCountry() {
   const [areas, setAreas] = useState([]);
   const [filterOrigin, setFilterOrigin] = useState('All');
-  const { setDataValues } = useContext(SearchBarContext);
+  const { setDataValues } = useContext(CardListContext);
 
   useEffect(() => {
     const getCategories = async () => {

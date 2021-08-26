@@ -2,7 +2,7 @@ import React, { useContext, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import { Button, Form } from 'react-bootstrap';
 import { useHistory } from 'react-router-dom';
-import { SearchBarContext } from '../context/SearchBar';
+import { CardListContext } from '../context/CardListContext';
 import fetchByFilter from '../services/data';
 
 export default function SearchBar(props) {
@@ -24,7 +24,7 @@ export default function SearchBar(props) {
     setData,
     data,
     setShouldCallCards,
-  } = useContext(SearchBarContext);
+  } = useContext(CardListContext);
 
   const { fetchType } = props;
 

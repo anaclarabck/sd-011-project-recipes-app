@@ -3,14 +3,14 @@ import PropTypes from 'prop-types';
 import { Redirect } from 'react-router-dom';
 import { Card } from 'react-bootstrap';
 import fetchByFilter from '../services/data';
-import { SearchBarContext } from '../context/SearchBar';
+import { CardListContext } from '../context/CardListContext';
 
 export default function CardsListByIngredient() {
   const [ingredName, setIngredName] = useState([]);
   const [imge, setImge] = useState([]);
   const [redirectTo, setRedirectTo] = useState(false);
   const path = window.location.pathname.split('/')[2];
-  const { setIngred } = useContext(SearchBarContext);
+  const { setIngred } = useContext(CardListContext);
   const url = path === 'bebidas' ? 'thecocktaildb' : 'themealdb';
 
   useEffect(() => {

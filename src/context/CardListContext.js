@@ -1,9 +1,9 @@
 import React, { createContext, useState } from 'react';
 import PropTypes from 'prop-types';
 
-export const SearchBarContext = createContext();
+export const CardListContext = createContext();
 
-export function SearchBarProvider({ children }) {
+export function CardListProvider({ children }) {
   const [data, setData] = useState({});
   const [shouldCallCards, setShouldCallCards] = useState(false);
   const [input, setInput] = useState('');
@@ -48,27 +48,12 @@ export function SearchBarProvider({ children }) {
     setIngred,
   };
   return (
-    <SearchBarContext.Provider value={ value }>
+    <CardListContext.Provider value={ value }>
       { children }
-    </SearchBarContext.Provider>
+    </CardListContext.Provider>
   );
 }
 
-SearchBarProvider.propTypes = {
+CardListProvider.propTypes = {
   children: PropTypes.node,
 }.isRequired;
-
-// import { SearchBarProvider } from '../../context/SearchBar';
-
-// function Foods() {
-//   return (
-//     <div>
-//       <SearchBarProvider>
-//         <SearchBar />
-//       </SearchBarProvider>
-//     </div>
-//   );
-// }
-
-// Dentro do Componente
-// const { setData } = useContext(SearchBarContext)

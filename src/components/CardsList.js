@@ -1,11 +1,11 @@
 import React, { useContext, useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
-import { SearchBarContext } from '../context/SearchBar';
+import { CardListContext } from '../context/CardListContext';
 import Cards from './Cards';
 import fetchByFilter from '../services/data';
 
 export default function CardsList(props) {
-  const { dataValues } = useContext(SearchBarContext);
+  const { dataValues } = useContext(CardListContext);
   const { fetchType, ingredient, styleHeight } = props;
   const [renderArray, setRenderArray] = useState([]);
   const MAX_CARDS = 12;

@@ -1,7 +1,7 @@
 import React, { useContext, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import { Button } from 'react-bootstrap';
-import { SearchBarContext } from '../context/SearchBar';
+import { CardListContext } from '../context/CardListContext';
 import fetchByFilter from '../services/data';
 
 // Ficam todas as funções referentes aos botões de categorias
@@ -18,7 +18,7 @@ export default function FiltersBar(props) {
     categories,
     setCategories,
     setShouldCallCards,
-  } = useContext(SearchBarContext);
+  } = useContext(CardListContext);
 
   const onClickFilter = (clickedCategory) => {
     const result = clickedCategory === filter ? '' : clickedCategory;

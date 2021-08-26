@@ -1,12 +1,12 @@
 import React, { useState, useEffect } from 'react';
+import { useHistory } from 'react-router-dom';
 import { Button, Form } from 'react-bootstrap';
-import { Redirect } from 'react-router';
 import weCookLogo from '../images/weCookLogo.png';
 
 function Login() {
   const [login, setLogin] = useState({ email: '', password: '' });
   const [disabled, setDisabled] = useState(true);
-  const [shouldRedirect, setShouldRedirect] = useState(false);
+  const history = useHistory();
 
   function handleChange({ target: { value, name } }) {
     setLogin({
@@ -32,12 +32,11 @@ function Login() {
     localStorage.setItem('mealsToken', 1);
     localStorage.setItem('cocktailsToken', 1);
     localStorage.setItem('user', JSON.stringify({ email }));
-    setShouldRedirect(true);
+    history.push('/comidas');
   }
 
   return (
     <main style={ { textAlign: 'center' } }>
-      { shouldRedirect && <Redirect to="/comidas" /> }
       <img src={ weCookLogo } alt="logo" style={ { width: '300px' } } />
       <h2 style={ { fontWeight: 'bold' } }>Login</h2>
       <Form className="container-login">
@@ -46,7 +45,7 @@ function Login() {
             id="id"
             type="email"
             data-testid="email-input"
-            placeholder="Email"
+            placeholder="E-mail"
             name="email"
             onChange={ handleChange }
           />
@@ -56,7 +55,7 @@ function Login() {
             id="password"
             type="password"
             data-testid="password-input"
-            placeholder="Senha"
+            placeholder="Password"
             name="password"
             onChange={ handleChange }
           />
@@ -69,7 +68,7 @@ function Login() {
           disabled={ disabled }
           onClick={ submitBtn }
         >
-          Entrar
+          Login
         </Button>
       </Form>
     </main>

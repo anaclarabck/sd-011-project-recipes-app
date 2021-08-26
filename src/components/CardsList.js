@@ -5,13 +5,10 @@ import Cards from './Cards';
 import fetchByFilter from '../services/data';
 
 export default function CardsList(props) {
-  const { dataValues } = useContext(CardListContext);
+  const { cardsList } = useContext(CardListContext);
   const { fetchType, ingredient, styleHeight } = props;
   const [renderArray, setRenderArray] = useState([]);
   const MAX_CARDS = 12;
-
-  useEffect(() => {
-  }, [dataValues]);
 
   useEffect(() => {
     const getRecipesByCategory = async () => {
@@ -21,7 +18,7 @@ export default function CardsList(props) {
       setRenderArray(newRecipes);
     };
     getRecipesByCategory();
-  }, [dataValues, ingredient]);
+  }, [cardsList, ingredient]);
 
   if (ingredient && ingredient.length > 0) {
     return (
@@ -38,12 +35,12 @@ export default function CardsList(props) {
       </div>
     );
   }
-  if (dataValues && dataValues.length > 0) {
+  if (cardsList && cardsList.length > 0) {
     return (
       <div
         style={ { marginTop: styleHeight ? '127px' : '175px', paddingBottom: '60px' } }
       >
-        { dataValues.slice(0, MAX_CARDS).map((eachRecipe1, index1) => (<Cards
+        { cardsList.slice(0, MAX_CARDS).map((eachRecipe1, index1) => (<Cards
           recipe={ eachRecipe1 }
           type={ fetchType }
           index={ index1 }

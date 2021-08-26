@@ -6,7 +6,7 @@ import fetchByFilter from '../services/data';
 export default function FoodExplorerByCountry() {
   const [areas, setAreas] = useState([]);
   const [filterOrigin, setFilterOrigin] = useState('All');
-  const { setDataValues } = useContext(CardListContext);
+  const { setCardsList } = useContext(CardListContext);
 
   useEffect(() => {
     const getCategories = async () => {
@@ -23,7 +23,7 @@ export default function FoodExplorerByCountry() {
       const URL_FILTER = `https://www.themealdb.com/api/json/v1/1/filter.php?a=${filterOrigin}`;
       const URL_FETCH = filterOrigin !== 'All' ? URL_FILTER : URL_ALL;
       const { meals } = await fetchByFilter(URL_FETCH);
-      setDataValues(meals);
+      setCardsList(meals);
     };
     getRecipes();
   }, [filterOrigin]);

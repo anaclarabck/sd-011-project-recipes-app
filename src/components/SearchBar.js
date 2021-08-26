@@ -1,7 +1,6 @@
 import React, { useContext, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import { Button, Form } from 'react-bootstrap';
-import { useHistory } from 'react-router-dom';
 import { CardListContext } from '../context/CardListContext';
 import fetchByFilter from '../services/data';
 
@@ -11,79 +10,27 @@ export default function SearchBar(props) {
     setInput,
     radio,
     setRadio,
-    recipeId,
-    setRecipeId,
-    dataValues,
-    setDataValues,
-    path,
-    setPath,
-    recipeType,
-    setRecipeType,
-    newSearch,
-    setNewSearch,
-    setData,
-    data,
-    setShouldCallCards,
+    cardsList,
+    setCardsList,
   } = useContext(CardListContext);
 
   const { fetchType } = props;
 
-  const history = useHistory();
-
   useEffect(() => {
-    setDataValues(Object.values(data)[0]); // Pega a primeira posição dos valores de data, onde ficam todos os objectos de receitas
-  }, [data, dataValues, setDataValues]);
-
-  useEffect(() => {
-    async function getPath() {
-      if (dataValues && dataValues.length === 1) {
-        if (fetchType === 'themealdb') {
-          setRecipeType('comidas');
-          setRecipeId(dataValues[0].idMeal);
-        }
-        if (fetchType === 'thecocktaildb') {
-          setRecipeType('bebidas');
-          setRecipeId(dataValues[0].idDrink);
-        }
-        await setPath(`/${recipeType}/${recipeId}`);
-        history.push(path);
-      }
-    }
-    getPath();
-  }, [
-    dataValues,
-    fetchType,
-    history,
-    path,
-    recipeId,
-    recipeType,
-    setPath,
-    setRecipeId,
-    setRecipeType,
-  ]);
-
-  useEffect(() => {
-    if (newSearch && !dataValues) {
+    if (!cardsList) {
       // eslint-disable-next-line no-alert
-      window.alert('Sinto muito, não encontramos nenhuma receita para esses filtros.');
-      setShouldCallCards(false);
+      alert('Sinto muito, não encontramos nenhuma receita para esses filtros.');
     }
-    if (newSearch && dataValues && dataValues.length > 1) {
-      setShouldCallCards(true);
-    }
-  }, [dataValues, setShouldCallCards, newSearch]);
+  }, [cardsList]);
 
   const handleClick = async () => {
     const urlToFetch = `https://www.${fetchType}.com/api/json/v1/1/${radio}${input}`;
     if (radio === 'search.php?f=' && input.length > 1) {
       // eslint-disable-next-line no-alert
-      return alert('Sua busca deve conter somente 1 (um) caracter');
+      alert('Sua busca deve conter somente 1 (um) caracter');
     }
-
     const dataFromApi = await fetchByFilter(urlToFetch);
-    setData(dataFromApi);
-    setNewSearch(true);
-    setNewSearch(false);
+    setCardsList(Object.values(dataFromApi)[0]);
   };
 
   return (
@@ -107,7 +54,7 @@ export default function SearchBar(props) {
           variant="dark"
           data-testid="exec-search-btn"
           type="button"
-          onClick={ () => handleClick() }
+          onClick={ handleClick }
         >
           Buscar
         </Button>

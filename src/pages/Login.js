@@ -68,7 +68,7 @@ function Login() {
           disabled={ disabled }
           onClick={ submitBtn }
         >
-          Login
+          Entrar
         </Button>
       </Form>
     </main>

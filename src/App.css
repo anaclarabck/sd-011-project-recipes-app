@@ -1,33 +1,120 @@
-.meals {
-  align-items: center;
-  background: #0fa36b;
-  color: #464646;
+body {
+  background-color: #ff900d;
+  min-height: 640px;
+}
+
+.button {
+  background-color: #4b2c0d;
+}
+
+.buttons-filter-favor {
+  display: flex;
+  justify-content: center;
+  margin: 50px 30px;
+}
+
+.button-style {
+  background-color: #4b2c0d;
+  display: block;
+  margin: 10px auto;
+  width: 200px;
+}
+
+.button-favAndDone {
+  background-color: #4b2c0d;
+  border: 1px solid #4b2c0d;
+  color: white;
+}
+
+.transition {
+  transition: 0.5s;
+}
+
+.card-favor-and-done {
+  background-color: white;
+  box-shadow: 0 0 5px;
   display: flex;
   flex-direction: column;
-  font-family: sans-serif;
-  height: 100vh;
-  justify-content: center;
+  float: none;
+  justify-content: space-between;
+  margin: 20px auto;
+  padding: 2px;
+  width: 304px;
+}
+
+.container-header-filters {
+  background: #ff900d;
+  padding: 0 0 10px;
+  position: fixed;
+  top: 0;
+  width: 100%;
+  z-index: 1;
+}
+
+.container-header {
+  align-items: center;
+  background: #f76c05;
+  display: flex;
+  padding: 10px;
   width: 100%;
 }
 
-.rocksGlass {
-  animation: shake 1s infinite ease;
+.container-login {
+  display: flex;
+  flex-direction: column;
+  margin: 20px auto;
+  width: 180px;
+}
+
+.meals {
+  align-items: center;
+  background: #0fa36b;
   max-height: 80vh;
 }
 
-/*
-#iceLeft {
-  animation: clink .8s infinite ease;
-  opacity: 0.6;
-  transform-origin: 36px 66px;
+.container-buttons-filter {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  margin-top: 20px;
 }
 
-#iceRight {
-  animation: clink .8s .2s infinite ease;
-  opacity: 0.6;
-  transform-origin: 60px 78px;
+.container-buttons {
+  display: block;
+  margin-top: 220px;
 }
-*/
+
+.container-profile {
+  display: block;
+  margin-top: 150px;
+  text-align: center;
+}
+
+.container-profile div {
+  margin: 50px auto;
+}
+
+/* stackoverflow https://bityli.com/3bN5N */
+.button-filter {
+  background-color: #4b2c0d;
+  font-size: 15px;
+  height: 40px;
+  line-height: 1em;
+  margin: 1px;
+  max-height: 3em;
+  width: 100px;
+  word-wrap: break-word;
+}
+
+.container-explore-by-area {
+  background: #ff900d;
+  padding: 10px;
+  position: fixed;
+  text-align: center;
+  top: 60px;
+  width: 100%;
+  z-index: 1;
+}
 
 .meals > .logo {
   animation: shake 1.5s infinite ease;

@@ -8,7 +8,7 @@ export default function Drinks() {
   const { ingred } = useContext(CardListContext);
   return (
     <main>
-      <Header title="Explorar Bebidas" search filterBar fetchType="thecocktaildb" />
+      <Header title="Explorar Bebidas" searchBar filterBar fetchType="thecocktaildb" />
       <CardsList fetchType="thecocktaildb" ingredient={ ingred } />
       <Footer />
     </main>

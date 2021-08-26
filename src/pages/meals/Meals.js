@@ -8,7 +8,7 @@ export default function Meals() {
   const { ingred } = useContext(CardListContext);
   return (
     <main>
-      <Header title="Explorar Comidas" search filterBar fetchType="themealdb" />
+      <Header title="Explorar Comidas" searchBar filterBar fetchType="themealdb" />
       <CardsList fetchType="themealdb" ingredient={ ingred } />
       <Footer />
     </main>

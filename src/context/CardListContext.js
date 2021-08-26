@@ -8,10 +8,8 @@ export function CardListProvider({ children }) {
   const [isVisibleSearchBar, setVisibleSearchBar] = useState(false);
   const [cardsList, setCardsList] = useState(); // o que será renderizado no CardList
   const [categories, setCategories] = useState([]);
-  const [search, setSearch] = useState({ searchType: '', searchInput: '' });
+  const [search, setSearch] = useState({ searchType: 'filter.php?i=', searchInput: '' });
   const [filter, setFilter] = useState('');
-  // Jorge
-  const [ingred, setIngred] = useState('');
 
   const handleClickSearch = async (fetchType) => {
     const { searchType: type, searchInput: input } = search;
@@ -35,8 +33,6 @@ export function CardListProvider({ children }) {
     setCategories,
     filter,
     setFilter,
-    ingred,
-    setIngred,
     handleClickSearch,
   };
   return (

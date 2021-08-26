@@ -11,6 +11,7 @@ function MealDetailCard() {
   const [rec, setRec] = useState([]);
   const [min, setMin] = useState([]);
 
+
   const path = window.location.pathname.split('/')[1] === 'comidas';
   const foodToDetail = 'https://www.themealdb.com/api/json/v1/1/lookup.php?i=';
   const drinkRecommend = 'https://www.thecocktaildb.com/api/json/v1/1/search.php?s=';

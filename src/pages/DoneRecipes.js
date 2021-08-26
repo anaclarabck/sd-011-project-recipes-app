@@ -16,7 +16,7 @@ export default function DoneRecipes() {
         : [...parsedDoneRecipe];
       setFilteredRecipes(newFilteredRecipes);
     }
-  }, [type]);
+  }, [doneRecipes]);
 
   const handleChange = (val) => setType(val);
   return (

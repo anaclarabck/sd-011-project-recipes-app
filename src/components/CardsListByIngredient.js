@@ -25,7 +25,7 @@ export default function CardsListByIngredient() {
     };
 
     getRecipes();
-  }, [path]);
+  }, [path, url]);
 
   useEffect(() => {
     const getCategories = async () => {

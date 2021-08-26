@@ -31,7 +31,9 @@ export default function Cards(props) {
     <Card
       style={ { margin: '20px auto', width: '304px', boxShadow: '0 0 5px' } }
       data-testid={ `${index}-recipe-card` }
-      onClick={ () => history.push(`/${tipo}/${recipe[shortName]}`) }
+      onClick={ () => history.push({
+        pathname: `/${tipo}/${recipe[shortName]}`,
+        state: recipe }) }
     >
       <Card.Img
         variant="top"

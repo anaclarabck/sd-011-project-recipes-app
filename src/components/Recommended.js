@@ -6,8 +6,8 @@ import PropTypes from 'prop-types';
 import 'slick-carousel/slick/slick.css';
 import 'slick-carousel/slick/slick-theme.css';
 
-function Recommended({ recommendedRecipes, type }) {
-  const typePath = type === 'meals' ? 'comidas' : 'bebidas';
+function Recommended({ recommendedRecipes, fetchType }) {
+  const typePath = fetchType === 'themealdb' ? 'comidas' : 'bebidas';
   const MAX = 6;
   const history = useHistory();
   const sixCards = recommendedRecipes.map((recipe) => recipe).slice(0, MAX);

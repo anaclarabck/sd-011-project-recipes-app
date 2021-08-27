@@ -3,10 +3,10 @@ import PropTypes from 'prop-types';
 import DetailCard from '../../components/DetailCard';
 
 export default function MealDetail({ location }) {
-  const { state } = location;
+  const { state: { id, fetchType } } = location;
   return (
     <div>
-      <DetailCard recipe={ state } />
+      <DetailCard id={ id } fetchType={ fetchType } />
     </div>
   );
 }

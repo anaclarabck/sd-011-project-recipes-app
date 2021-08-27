@@ -10,70 +10,86 @@ import fetchByFilter from '../services/data';
 import { shuffleArray, getItemsFromObject } from '../services/functions';
 
 export default function DetailCard(props) {
-  const { recipe } = props;
-  const { strInstructions, strYoutube } = recipe;
-  const { strMeal, strMealThumb, strArea, strCategory } = recipe;
-  const { strDrink, strDrinkThumb, strAlcoholic } = recipe;
-  const fetchtype = strMeal ? 'thecocktaildb' : 'themealdb';
-  const type = strMeal ? 'drinks' : 'meals';
-  const ingredients = getItemsFromObject(recipe, 'strIngredient', '');
-  const measures = getItemsFromObject(recipe, 'strMeasure', ' ');
+  const { id, fetchType } = props;
+  const [details, setDetails] = useState('');
+  const [ingredients, setIngredients] = useState([]);
+  const [measures, setMeasures] = useState([]);
   const [recommendedRecipes, setRecommendedRecipes] = useState([]);
 
+  const getRecommendedRecipes = async () => {
+    const fetchtypeRecommend = fetchType === 'themealdb' ? 'thecocktaildb' : 'themealdb';
+    const urlToFetch = `https://www.${fetchtypeRecommend}.com/api/json/v1/1/search.php?s=`;
+    const recommendedRecipesFromApi = await fetchByFilter(urlToFetch);
+    setRecommendedRecipes(shuffleArray(Object.values(recommendedRecipesFromApi)[0]));
+  };
+
+  const getDetails = async () => {
+    const urlToFetch = `https://www.${fetchType}.com/api/json/v1/1/lookup.php?i=${id}`;
+    const detailsFromApi = await fetchByFilter(urlToFetch);
+    const detailsObject = Object.values(detailsFromApi)[0][0];
+    setIngredients(getItemsFromObject(detailsObject, 'strIngredient', ''));
+    setMeasures(getItemsFromObject(detailsObject, 'strMeasure', ' '));
+    setDetails(detailsObject);
+  };
+
   useEffect(() => {
-    const getRecommend = async () => {
-      const urlToFetch = `https://www.${fetchtype}.com/api/json/v1/1/search.php?s=`;
-      const recipes = await fetchByFilter(urlToFetch);
-      setRecommendedRecipes(shuffleArray(recipes[type]));
-    };
-    getRecommend();
+    getRecommendedRecipes();
+    getDetails();
   // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
-  return (
-    <>
-      <Card style={ { width: '90%', margin: '15px auto' } }>
-        <Card.Body>
-          <Card.Img
-            data-testid="recipe-photo"
-            width="150px"
-            src={ strMealThumb || strDrinkThumb }
-            alt="tumb"
-          />
-          <Card.Text data-testid="recipe-title">{strMeal || strDrink}</Card.Text>
-          <Card.Text>{strArea}</Card.Text>
-          <Card.Text data-testid="recipe-category">
-            {strCategory || strAlcoholic }
+  if (details) {
+    return (
+      <>
+        <Card style={ { width: '90%', margin: '15px auto' } }>
+          <Card.Body>
+            <Card.Img
+              data-testid="recipe-photo"
+              width="150px"
+              src={ details.strMealThumb || details.strDrinkThumb }
+              alt="tumb"
+            />
+            <Card.Text data-testid="recipe-title">
+              {details.strMeal || details.strDrink}
+            </Card.Text>
+            <Card.Text>{details.strArea}</Card.Text>
+            <Card.Text data-testid="recipe-category">
+              {details.strCategory || details.strAlcoholic }
+            </Card.Text>
+            <Card.Text style={ { display: 'flex', justifyContent: 'space-around' } }>
+              <ButtonFavorite objData={ details } />
+              <ButtonShare path={ window.location.href } testid="share-btn" />
+            </Card.Text>
+            <Card.Text>
+              { ingredients.map((element, index) => (
+                <Card.Text
+                  data-testid={ `${index}-ingredient-name-and-measure` }
+                  key={ index }
+                >
+                  { measures[index] ? `${element} - ${measures[index]}` : element }
+                </Card.Text>
+              ))}
+            </Card.Text>
+            <h6 data-testid="instructions">{details.strInstructions}</h6>
+            { details.strYoutube
+              && <RenderVideo
+                src={ details.strYoutube }
+                title={ `Recipe ${details.strMeal}` }
+                id="video"
+              /> }
+          </Card.Body>
+          <Card.Text style={ { margin: '40px', paddingBottom: '60px' } }>
+            <Recommended
+              recommendedRecipes={ recommendedRecipes }
+              fetchType={ fetchType }
+            />
           </Card.Text>
-          <Card.Text style={ { display: 'flex', justifyContent: 'space-around' } }>
-            <ButtonFavorite objData={ recipe } />
-            <ButtonShare path={ window.location.href } testid="share-btn" />
-          </Card.Text>
-          <Card.Text>
-            { ingredients.map((element, index) => (
-              <Card.Text
-                data-testid={ `${index}-ingredient-name-and-measure` }
-                key={ index }
-              >
-                { measures[index] ? `${element} - ${measures[index]}` : element }
-              </Card.Text>
-            ))}
-          </Card.Text>
-          <h6 data-testid="instructions">{strInstructions}</h6>
-          { strYoutube
-            && <RenderVideo
-              src={ strYoutube }
-              title={ `Recipe ${strMeal}` }
-              id="video"
-            /> }
-        </Card.Body>
-        <Card.Text style={ { margin: '40px', paddingBottom: '60px' } }>
-          <Recommended recommendedRecipes={ recommendedRecipes } type={ type } />
-        </Card.Text>
-      </Card>
-      <ButtonToProgress data={ recipe } />
-    </>
-  );
+        </Card>
+        <ButtonToProgress data={ details } />
+      </>
+    );
+  }
+  return <div>Carregando...</div>;
 }
 
 DetailCard.propTypes = {

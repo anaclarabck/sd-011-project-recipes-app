@@ -51,7 +51,9 @@ export default function FoodExplorer() {
           size="lg"
           data-testid="explore-surprise"
           type="button"
-          onClick={ () => history.push(`/comidas/${idRandomFood}`) }
+          onClick={ () => history.push({
+            pathname: `/comidas/${idRandomFood}`,
+            state: { id: idRandomFood, fetchType: 'themealdb' } }) }
         >
           Me Surpreenda!
         </Button>

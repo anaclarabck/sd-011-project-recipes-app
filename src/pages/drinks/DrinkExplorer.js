@@ -38,7 +38,9 @@ export default function DrinkExplorer() {
           size="lg"
           data-testid="explore-surprise"
           type="button"
-          onClick={ () => history.push(`/bebidas/${idRandomDrink}`) }
+          onClick={ () => history.push({
+            pathname: `/bebidas/${idRandomDrink}`,
+            state: { id: idRandomDrink, fetchType: 'thecocktaildb' } }) }
         >
           Me Surpreenda!
         </Button>

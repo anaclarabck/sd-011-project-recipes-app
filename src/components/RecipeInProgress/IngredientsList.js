@@ -2,9 +2,10 @@ import React, { useContext, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import { Form } from 'react-bootstrap';
 import { InProgressContext } from '../../context/RecipeInProgress';
+import { getItemsFromObject } from '../../services/functions';
 
 export default function IngredientsList(props) {
-  const { recipe, name, category } = props;
+  const { recipe, category } = props;
   const {
     setLocalStorage,
     ingredientsArray,
@@ -23,13 +24,9 @@ export default function IngredientsList(props) {
   }, [setFinishButton]);
 
   useEffect(() => {
-    const getItems = (searchedKey) => Object.entries(recipe).filter(
-      (value) => value[0].includes(searchedKey) && value[1],
-    ).map((item) => item[1]);
-
     if (recipe) {
-      const ingredients = getItems('Ingredient');
-      const measures = getItems('Measure');
+      const ingredients = getItemsFromObject(recipe, 'strIngredient', '');
+      const measures = getItemsFromObject(recipe, 'strMeasure', ' ');
       setIngredientsArray(ingredients);
       setMeasurementsArray(measures);
     }
@@ -37,7 +34,6 @@ export default function IngredientsList(props) {
 
   return (
     <>
-      <h1 data-testid="recipe-title">{ name }</h1>
       <p data-testid="recipe-category">{ category }</p>
       <Form>
         { ingredientsArray && ingredientsArray.map((ingredient, index) => (

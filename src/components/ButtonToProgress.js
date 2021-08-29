@@ -2,11 +2,13 @@ import React, { useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
 import { useHistory } from 'react-router-dom';
 import { Button } from 'react-bootstrap';
+import { addIdStorageInProgress } from '../services/functions';
 
 function ButtonToProgress(props) {
   const { data } = props;
   const id = data.idMeal || data.idDrink;
   const type = data.idMeal ? 'comidas' : 'bebidas';
+  const typeEnligsh = data.idMeal ? 'meals' : 'cocktails';
   const history = useHistory();
   const [progress, setProgress] = useState(false);
   const [canStart, setCanStart] = useState(true);
@@ -31,6 +33,13 @@ function ButtonToProgress(props) {
     }
   }, []);
 
+  const handleStartButton = () => {
+    addIdStorageInProgress(id, typeEnligsh);
+    history.push({
+      pathname: `/${type}/${id}/in-progress`,
+      state: data });
+  };
+
   const startButton = () => (
     <div className="button-to-progress">
       <Button
@@ -39,9 +48,7 @@ function ButtonToProgress(props) {
         style={ { position: 'fixed', bottom: 0 } }
         data-testid="start-recipe-btn"
         type="button"
-        onClick={ () => history.push({
-          pathname: `/${type}/${id}/in-progress`,
-          state: data }) }
+        onClick={ handleStartButton }
       >
         { progress ? 'Continuar Receita' : 'Iniciar Receita' }
       </Button>

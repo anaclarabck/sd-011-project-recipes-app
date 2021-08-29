@@ -11,7 +11,7 @@ export const shuffleArray = (array) => (
 // use notEqual = '' with meals and notEqual = ' ' with drinks
 export const getItemsFromObject = (object, key, notEqual) => (
   Object.entries(object)
-    .filter((item) => (item[0].includes(key) && item[1] !== notEqual))
+    .filter((item) => (item[0].includes(key) && item[1]))
     .map((item) => item[1])
 );
 
@@ -39,7 +39,6 @@ export const createRecipeData = (details, keyStorage) => {
 
 // set action to 'add' if you want to add an item
 // set action to 'remove' if you want to remove an item and use the whole object from the api as valueStorage
-// set action to 'create' if you want to create a key storage from zero
 export const updateStorage = (keyStorage, valueStorage, action) => {
   const storage = localStorage.getItem(keyStorage);
   const parsedStorage = storage ? JSON.parse(storage) : [];
@@ -52,4 +51,38 @@ export const updateStorage = (keyStorage, valueStorage, action) => {
       .filter((item) => (item.id !== valueStorage.idDrink || valueStorage.idMeal));
     localStorage.setItem(keyStorage, JSON.stringify(updatedStorage));
   }
+};
+
+export const addIdStorageInProgress = (id, type) => {
+  const storage = localStorage.getItem('inProgressRecipes');
+  let updatedStorage = storage ? JSON.parse(storage) : { cocktails: { }, meals: { } };
+  if (Object.keys(updatedStorage[type]).includes(id)) {
+    updatedStorage = { ...updatedStorage,
+      [type]: { ...updatedStorage[type], [id]: [...updatedStorage[type][id]] } };
+  } else {
+    updatedStorage = { ...updatedStorage, [type]: { ...updatedStorage[type], [id]: [] } };
+  }
+  localStorage.setItem('inProgressRecipes', JSON.stringify(updatedStorage));
+};
+
+export const updateStorageInProgress = (id, type, ingredient, bool) => {
+  const storage = localStorage.getItem('inProgressRecipes');
+  let updatedStorage = storage ? JSON.parse(storage) : { cocktails: { }, meals: { } };
+  if (!Object.keys(updatedStorage[type]).includes(id) && bool) { // caso não tenha id e esteja adicionando ingrediente
+    updatedStorage = {
+      ...updatedStorage,
+      [type]: { ...updatedStorage[type], [id]: [ingredient] } };
+  } if (Object.keys(updatedStorage[type]).includes(id) && bool) { // caso tenha id e esteja adicionando ingrediente
+    updatedStorage = {
+      ...updatedStorage,
+      [type]: { ...updatedStorage[type], [id]: [...updatedStorage[type][id], ingredient],
+      } };
+  } if (!bool) { // caso esteja retirando ingrediente - logicamente já terá id
+    updatedStorage = {
+      ...updatedStorage,
+      [type]: { ...updatedStorage[type],
+        [id]: [...updatedStorage[type][id].filter((item) => item !== ingredient)],
+      } };
+  }
+  localStorage.setItem('inProgressRecipes', JSON.stringify(updatedStorage));
 };

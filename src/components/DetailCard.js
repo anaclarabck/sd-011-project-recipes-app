@@ -15,9 +15,9 @@ export default function DetailCard(props) {
   const [ingredients, setIngredients] = useState([]);
   const [measures, setMeasures] = useState([]);
   const [recommendedRecipes, setRecommendedRecipes] = useState([]);
+  const fetchtypeRecommend = fetchType === 'themealdb' ? 'thecocktaildb' : 'themealdb';
 
   const getRecommendedRecipes = async () => {
-    const fetchtypeRecommend = fetchType === 'themealdb' ? 'thecocktaildb' : 'themealdb';
     const urlToFetch = `https://www.${fetchtypeRecommend}.com/api/json/v1/1/search.php?s=`;
     const recommendedRecipesFromApi = await fetchByFilter(urlToFetch);
     setRecommendedRecipes(shuffleArray(Object.values(recommendedRecipesFromApi)[0]));
@@ -80,8 +80,8 @@ export default function DetailCard(props) {
           </Card.Body>
           <Card.Text style={ { margin: '40px', paddingBottom: '60px' } }>
             <Recommended
+              fetchType={ fetchtypeRecommend }
               recommendedRecipes={ recommendedRecipes }
-              fetchType={ fetchType }
             />
           </Card.Text>
         </Card>

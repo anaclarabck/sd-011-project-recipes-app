@@ -7,7 +7,6 @@ import 'slick-carousel/slick/slick.css';
 import 'slick-carousel/slick/slick-theme.css';
 
 function Recommended({ recommendedRecipes, fetchType }) {
-  const typePath = fetchType === 'themealdb' ? 'comidas' : 'bebidas';
   const MAX = 6;
   const history = useHistory();
   const sixCards = recommendedRecipes.map((recipe) => recipe).slice(0, MAX);
@@ -20,9 +19,11 @@ function Recommended({ recommendedRecipes, fetchType }) {
     slidesToScroll: 2,
   };
   const handleClick = (recipe) => {
+    const type = fetchType === 'themealdb' ? 'comidas' : 'bebidas';
+    const id = recipe[1].idMeal || recipe[1].idDrink;
     history.push({
-      pathname: `/${typePath}/${recipe[1].idMeal || recipe[1].idDrink}`,
-      state: recipe[1] });
+      pathname: `/${type}/${id}`,
+      state: { id, fetchType } });
   };
 
   return (
@@ -54,8 +55,7 @@ function Recommended({ recommendedRecipes, fetchType }) {
 
 Recommended.propTypes = {
   recommendedRecipes: PropTypes.arrayOf(PropTypes.object).isRequired,
-  type: PropTypes.string.isRequired,
-  min: PropTypes.number.isRequired,
+  fetchType: PropTypes.string.isRequired,
 };
 
 export default Recommended;

@@ -1,61 +1,50 @@
 import React, { useEffect, useState, useContext } from 'react';
+import { useHistory } from 'react-router-dom';
 import PropTypes from 'prop-types';
-import { Redirect } from 'react-router-dom';
 import { Card } from 'react-bootstrap';
+import { CardListContext } from '../context/CardListContext';
 import fetchByFilter from '../services/data';
-import { SearchBarContext } from '../context/SearchBar';
 
-export default function CardsListByIngredient() {
-  const [ingredName, setIngredName] = useState([]);
-  const [imge, setImge] = useState([]);
-  const [redirectTo, setRedirectTo] = useState(false);
-  const path = window.location.pathname.split('/')[2];
-  const { setIngred } = useContext(SearchBarContext);
-  const url = path === 'bebidas' ? 'thecocktaildb' : 'themealdb';
+export default function CardsListByIngredient(props) {
+  const [ingredientsList, setIngredientsList] = useState([]);
+  const history = useHistory();
+  const { fetchType } = props;
+  const { setVisibleSearchBar, setSearch, setCardsList } = useContext(CardListContext);
 
   useEffect(() => {
     const getRecipes = async () => {
-      const urlToFetch = `https://www.${url}.com/api/json/v1/1/list.php?i=list`;
-      const recipesFromApi = await fetchByFilter(urlToFetch);
-      const recipesList = Object.values(recipesFromApi)[0];
-      const array = path === 'bebidas'
-        ? recipesList.map((e) => (e.strIngredient1))
-        : recipesList.map((e) => (e.strIngredient));
-      return setIngredName(array);
+      const urlToFetch = `https://www.${fetchType}.com/api/json/v1/1/list.php?i=list`;
+      const ingredientsFromApi = await fetchByFilter(urlToFetch);
+      const ingredient = fetchType === 'themealdb' ? 'strIngredient' : 'strIngredient1';
+      const ingredientsListJSON = Object.values(ingredientsFromApi)[0].map((item) => (
+        { name: item[ingredient],
+          image: `https://www.${fetchType}.com/images/ingredients/${item[ingredient]}-Small.png` }));
+      const MAX = 12;
+      setIngredientsList(ingredientsListJSON.slice(0, MAX));
     };
-
     getRecipes();
-  }, [path]);
+  }, []);
 
-  useEffect(() => {
-    const getCategories = async () => {
-      const img = ingredName.map((e) => ({
-        fig: `https://www.${url}.com/images/ingredients/${e}-Small.png`,
-        name: `${e}`,
-      }));
-      const magicN = 12;
-      setImge(img.slice(0, magicN));
-    };
-
-    getCategories();
-  }, [path, ingredName]);
-
-  const handleClick = (value) => {
-    setIngred(value);
-    setRedirectTo(true);
+  const handleClick = async (value) => {
+    const urlToFetch = `https://www.${fetchType}.com/api/json/v1/1/filter.php?i=${value}`;
+    const dataFromApi = await fetchByFilter(urlToFetch);
+    setSearch({ searchType: 'filter.php?i=', searchInput: value });
+    setCardsList(Object.values(dataFromApi)[0]);
+    setVisibleSearchBar(true);
+    const tipo = fetchType === 'themealdb' ? 'comidas' : 'bebidas';
+    history.push(`/${tipo}`);
   };
 
   return (
     <div style={ { position: 'relative', top: '75px' } }>
-      { imge.map((e, i) => (
+      { ingredientsList.map((ingredient, index) => (
         <Card
           style={ { margin: '10px auto', width: '304px', boxShadow: '0 0 5px' } }
           role="button"
-          data-testid={ `${i}-ingredient-card` }
-          type="button"
-          key={ i }
-          onClick={ () => handleClick(e.name) }
-          onKeyPress={ () => handleClick(e.name) }
+          data-testid={ `${index}-ingredient-card` }
+          key={ index }
+          onClick={ () => handleClick(ingredient.name) }
+          onKeyPress={ () => handleClick(ingredient.name) }
           tabIndex="0"
         >
           <Card.Body
@@ -65,20 +54,19 @@ export default function CardsListByIngredient() {
           >
             <img
               style={ { width: '100px' } }
-              src={ e.fig }
-              alt={ `figure ${e.name}` }
-              data-testid={ `${i}-card-img` }
+              src={ ingredient.image }
+              alt={ `figure ${ingredient.name}` }
+              data-testid={ `${index}-card-img` }
             />
             <p
               style={ { fontSize: '20px', fontWeight: 'bold', textAlign: 'right' } }
-              data-testid={ `${i}-card-name` }
+              data-testid={ `${index}-card-name` }
             >
-              { e.name }
+              { ingredient.name }
             </p>
           </Card.Body>
         </Card>
       )) }
-      { redirectTo && <Redirect to={ `/${path}` } /> }
     </div>
   );
 }

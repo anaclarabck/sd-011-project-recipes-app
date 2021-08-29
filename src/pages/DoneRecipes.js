@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { ToggleButton, ToggleButtonGroup } from 'react-bootstrap';
-import CardsRecipesDone from '../components/CardsRecipesDone';
+import CardsDoneAndFavorite from '../components/CardsDoneAndFavorite';
 import Header from '../components/Header';
 
 export default function DoneRecipes() {
@@ -16,12 +16,12 @@ export default function DoneRecipes() {
         : [...parsedDoneRecipe];
       setFilteredRecipes(newFilteredRecipes);
     }
-  }, [type]);
+  }, [doneRecipes, type]);
 
   const handleChange = (val) => setType(val);
   return (
     <div>
-      <Header title="Receitas Feitas" search={ false } />
+      <Header title="Receitas Feitas" />
       <section className="container-buttons" style={ { marginTop: '80px' } }>
         <ToggleButtonGroup
           type="radio"
@@ -62,7 +62,12 @@ export default function DoneRecipes() {
       <section>
         { (filteredRecipes.length > 0 && Object.keys(filteredRecipes[0]).length !== 0)
           ? filteredRecipes.map((recipe, index) => (
-            <CardsRecipesDone recipe={ recipe } index={ index } key={ index } />))
+            <CardsDoneAndFavorite
+              recipe={ recipe }
+              index={ index }
+              key={ index }
+              typeCard="doneRecipes"
+            />))
           : <div>Sem receitas feitas</div>}
       </section>
     </div>

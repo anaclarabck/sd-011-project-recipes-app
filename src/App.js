@@ -3,11 +3,11 @@ import { Route, Switch } from 'react-router-dom';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import './App.css';
 import Login from './pages/Login';
-import Foods from './pages/foods/Foods';
-import FoodExplorer from './pages/foods/FoodExplorer';
-import FoodExplorerByIngredients from './pages/foods/FoodExplorerByIngredients';
-import FoodExplorerByCountry from './pages/foods/FoodExplorerByCountry';
-import FoodRecipes from './pages/foods/FoodRecipes';
+import Meals from './pages/meals/Meals';
+import FoodExplorer from './pages/meals/FoodExplorer';
+import FoodExplorerByIngredients from './pages/meals/FoodExplorerByIngredients';
+import FoodExplorerByCountry from './pages/meals/FoodExplorerByCountry';
+import MealDetail from './pages/meals/MealDetail';
 import Drinks from './pages/drinks/Drinks';
 import DrinkExplorer from './pages/drinks/DrinkExplorer';
 import DrinkExplorerByIngredients from './pages/drinks/DrinkExplorerByIngredients';
@@ -33,11 +33,10 @@ function App() {
       <Route exact path={ pathFoods } component={ FoodExplorerByIngredients } />
       <Route exact path={ pathDrinks } component={ DrinkExplorerByIngredients } />
       <Route exact path="/explorar/comidas/area" component={ FoodExplorerByCountry } />
-      <Route exact path="/comidas" component={ Foods } />
+      <Route exact path="/comidas" component={ Meals } />
       <Route exact path="/bebidas" component={ Drinks } />
-      <Route exact path="/comidas/:id" component={ FoodRecipes } />
+      <Route exact path="/comidas/:id" component={ MealDetail } />
       <Route exact path="/bebidas/:id" component={ DrinkRecipes } />
-      <Route exact path="/perfil" component={ Profile } />
       <Route exact path="/receitas-feitas" component={ DoneRecipes } />
       <Route exact path="/receitas-favoritas" component={ FavoriteRecipes } />
       <Route exact path="/comidas/:id/in-progress" component={ RecipeInProgress } />

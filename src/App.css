@@ -26,6 +26,18 @@ body {
   color: white;
 }
 
+.button-to-progress {
+  align-items: center;
+  background: #f76c05;
+  bottom: 0;
+  display: flex;
+  height: 60px;
+  justify-content: space-around;
+  position: fixed;
+  width: 100%;
+  z-index: 1;
+}
+
 .transition {
   transition: 0.5s;
 }
@@ -40,6 +52,28 @@ body {
   margin: 20px auto;
   padding: 2px;
   width: 304px;
+}
+
+.card-favorite-done-title {
+  display: flex;
+  justify-content: space-between;
+  text-align: center;
+  width: 260px;
+}
+
+.card-done-favorite-buttons {
+  align-items: center;
+  display: flex;
+  justify-content: space-between;
+  width: 60px;
+}
+
+.cards-favorite-done-tags {
+  background: #e6e6e6;
+  border-radius: 5px;
+  font-size: 14px;
+  margin: 2px;
+  padding: 3px;
 }
 
 .container-header-filters {

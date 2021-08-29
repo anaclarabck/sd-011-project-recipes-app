@@ -1,7 +1,7 @@
 import React from 'react';
 import { act } from 'react-dom/test-utils';
 import { cleanup, fireEvent, render, screen } from '@testing-library/react';
-import { SearchBarProvider } from '../context/SearchBar';
+import { CardListProvider } from '../context/CardListContext';
 import Drinks from '../pages/drinks/Drinks';
 import drinks from '../../cypress/mocks/drinks';
 import drinksCategories from '../../cypress/mocks/drinkCategories';
@@ -28,14 +28,14 @@ describe('Testa a tela <Drinks.js />', () => {
   beforeAll(mockFetchDrinks, mockFetchCategories);
   beforeEach(cleanup);
   it('A tela de bebidas possui header', () => {
-    const screenDrinks = render(<Drinks />, { wrapper: SearchBarProvider });
+    const screenDrinks = render(<Drinks />, { wrapper: CardListProvider });
     screenDrinks.getByText(/Explorar Bebidas/);
     screenDrinks.getByTestId('profile-top-btn');
     screenDrinks.getByTestId('search-top-btn');
   });
 
   it('A tela de bebidas possui footer', () => {
-    const screenDrinks = render(<Drinks />, { wrapper: SearchBarProvider });
+    const screenDrinks = render(<Drinks />, { wrapper: CardListProvider });
     screenDrinks.getByTestId('food-bottom-btn');
     screenDrinks.getByTestId('drinks-bottom-btn');
     screenDrinks.getByTestId('explore-bottom-btn');
@@ -43,7 +43,7 @@ describe('Testa a tela <Drinks.js />', () => {
 
   it('Possui os cards', async () => {
     await act(async () => {
-      render(<Drinks />, { wrapper: SearchBarProvider });
+      render(<Drinks />, { wrapper: CardListProvider });
     });
     expect(await screen.getByTestId('Cocktail-category-filter')).toBeInTheDocument();
     expect(await screen.getByTestId('0-recipe-card')).toBeInTheDocument();
@@ -54,7 +54,7 @@ describe('Testa a tela <Drinks.js />', () => {
   });
   it('Possui os botão search', async () => {
     await act(async () => {
-      render(<Drinks />, { wrapper: SearchBarProvider });
+      render(<Drinks />, { wrapper: CardListProvider });
     });
     const buttonSearch = await screen.getByTestId('search-top-btn');
     fireEvent.click(buttonSearch);

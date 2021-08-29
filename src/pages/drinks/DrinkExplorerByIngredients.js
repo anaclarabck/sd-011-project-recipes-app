@@ -7,7 +7,7 @@ export default function DrinkExplorerByIngredients() {
   return (
     <>
       <Header title="Explorar Ingredientes" />
-      <CardsListByIngredient />
+      <CardsListByIngredient fetchType="thecocktaildb" />
       <Footer />
     </>
   );

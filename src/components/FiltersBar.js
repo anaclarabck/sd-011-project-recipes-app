@@ -1,7 +1,7 @@
 import React, { useContext, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import { Button } from 'react-bootstrap';
-import { SearchBarContext } from '../context/SearchBar';
+import { CardListContext } from '../context/CardListContext';
 import fetchByFilter from '../services/data';
 
 // Ficam todas as funções referentes aos botões de categorias
@@ -10,15 +10,12 @@ export default function FiltersBar(props) {
   const { fetchType } = props;
   const five = 5;
   const {
-    dataList,
-    setDataList,
-    setDataValues,
+    setCardsList,
     filter,
     setFilter,
     categories,
     setCategories,
-    setShouldCallCards,
-  } = useContext(SearchBarContext);
+  } = useContext(CardListContext);
 
   const onClickFilter = (clickedCategory) => {
     const result = clickedCategory === filter ? '' : clickedCategory;
@@ -30,9 +27,7 @@ export default function FiltersBar(props) {
       const urlToFetch = `https://www.${fetchType}.com/api/json/v1/1/search.php?s=`;
       const recipesFromApi = await fetchByFilter(urlToFetch);
       const recipesList = Object.values(recipesFromApi)[0];
-      setDataValues(recipesList);
-      setDataList(recipesList);
-      setShouldCallCards(true);
+      setCardsList(recipesList);
     };
     const getCategories = async () => {
       const urlToFetch = `https://www.${fetchType}.com/api/json/v1/1/list.php?c=list`;
@@ -47,17 +42,19 @@ export default function FiltersBar(props) {
 
   useEffect(() => {
     const getRecipesByCategory = async () => {
-      let newRecipesFiltered = [...dataList];
+      const urlAllToFetch = `https://www.${fetchType}.com/api/json/v1/1/search.php?s=`;
+      const recipesAllFromApi = await fetchByFilter(urlAllToFetch);
+      let newRecipesFiltered = Object.values(recipesAllFromApi)[0];
       if (filter) {
-        const urlToFetch = `https://www.${fetchType}.com/api/json/v1/1/filter.php?c=${filter}`;
-        const recipesFromApi = await fetchByFilter(urlToFetch);
-        newRecipesFiltered = [...Object.values(recipesFromApi)[0]];
+        const urlFilterToFetch = `https://www.${fetchType}.com/api/json/v1/1/filter.php?c=${filter}`;
+        const recipesFilterFromApi = await fetchByFilter(urlFilterToFetch);
+        newRecipesFiltered = [...Object.values(recipesFilterFromApi)[0]];
       }
-      setDataValues(newRecipesFiltered);
+      setCardsList(newRecipesFiltered);
     };
     getRecipesByCategory();
   // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [filter, fetchType, dataList]);
+  }, [filter, fetchType]);
 
   return (
     <section className="container-buttons-filter">

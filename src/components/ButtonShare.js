@@ -20,9 +20,7 @@ export default function ButtonShare(props) {
   useEffect(() => {
     if (isCopied) {
       const SECONDS = 2000;
-      setInterval(() => {
-        setIsCopied(false);
-      }, SECONDS);
+      setInterval(() => { setIsCopied(false); }, SECONDS);
     }
   }, [isCopied]);
 
@@ -32,17 +30,16 @@ export default function ButtonShare(props) {
   };
 
   return (
-    <div style={ { display: 'flex' } }>
-      <button
-        style={ { background: 'none', opacity: 'none', border: 'none' } }
-        type="button"
-        onClick={ onClickButtonShare }
-      >
-        <img src={ shareIcon } alt="share icon" data-testid={ testid } />
-      </button>
+    <div
+      style={ { display: 'flex' } }
+      role="button"
+      onKeyPress={ onClickButtonShare }
+      onClick={ onClickButtonShare }
+      tabIndex="0"
+    >
+      <img src={ shareIcon } alt="share icon" data-testid={ testid } />
       { isCopied && <p>Link copiado!</p>}
     </div>
-
   );
 }
 

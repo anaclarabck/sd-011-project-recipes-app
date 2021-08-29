@@ -4,14 +4,13 @@ import { BrowserRouter } from 'react-router-dom/cjs/react-router-dom.min';
 import './index.css';
 import App from './App';
 import * as serviceWorker from './serviceWorker';
-import { SearchBarProvider } from './context/SearchBar';
-// import { SearchBarProvider } from './context/SearchBar';
+import { CardListProvider } from './context/CardListContext'
 
 ReactDOM.render(
   <BrowserRouter>
-    <SearchBarProvider>
+    <CardListProvider>
       <App />
-    </SearchBarProvider>
+    </CardListProvider>
   </BrowserRouter>,
   document.getElementById('root'),
 );

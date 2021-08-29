@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import DetailCard from '../../components/DetailCard';
 
-export default function DrinkRecipes({ location }) {
+export default function MealDetail({ location }) {
   const { state: { id, fetchType } } = location;
   return (
     <div>
@@ -11,6 +11,6 @@ export default function DrinkRecipes({ location }) {
   );
 }
 
-DrinkRecipes.propTypes = {
+MealDetail.propTypes = {
   location: PropTypes.string,
 }.isRequired;

@@ -1,15 +1,16 @@
-import React, { useState } from 'react';
+import React, { useContext } from 'react';
 import { useHistory } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import profileIcon from '../images/profileIcon.svg';
 import searchIcon from '../images/searchIcon.svg';
 import SearchBar from './SearchBar';
 import FiltersBar from './FiltersBar';
+import { CardListContext } from '../context/CardListContext';
 
 export default function Header(props) {
-  const [isVisibleSearchBar, setVisibleSearchBar] = useState(false);
+  const { isVisibleSearchBar, setVisibleSearchBar } = useContext(CardListContext);
   const history = useHistory();
-  const { title, search, fetchType, filterBar } = props;
+  const { title, searchBar, fetchType, filterBar } = props;
 
   const buttonSearch = () => (
     <div
@@ -49,7 +50,7 @@ export default function Header(props) {
           { title }
         </h3>
         <div style={ { width: '30px' } }>
-          { search && buttonSearch() }
+          { searchBar && buttonSearch() }
         </div>
       </header>
       <section>
@@ -62,5 +63,5 @@ export default function Header(props) {
 
 Header.propTypes = {
   title: PropTypes.string,
-  search: PropTypes.bool,
+  searchBar: PropTypes.bool,
 }.isRequired;

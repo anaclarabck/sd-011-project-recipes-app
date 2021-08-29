@@ -7,7 +7,7 @@ export default function FoodExplorerByIngredients() {
   return (
     <>
       <Header title="Explorar Ingredientes" />
-      <CardsListByIngredient />
+      <CardsListByIngredient fetchType="themealdb" />
       <Footer />
     </>
   );

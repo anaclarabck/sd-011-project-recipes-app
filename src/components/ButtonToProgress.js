@@ -1,85 +1,54 @@
 import React, { useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
-import { Redirect } from 'react-router-dom';
+import { useHistory } from 'react-router-dom';
 import { Button } from 'react-bootstrap';
 
 function ButtonToProgress(props) {
-  const { mealDetail, drinkDetail } = props;
-  const [type, setType] = useState('comidas');
-  // if (drinkDetail) setType('bebidas');
-
-  const [toRedirect, setToRedirect] = useState(false);
+  const { data } = props;
+  const id = data.idMeal || data.idDrink;
+  const type = data.idMeal ? 'comidas' : 'bebidas';
+  const history = useHistory();
   const [progress, setProgress] = useState(false);
-  const [start, setStart] = useState(false);
-  const path = window.location.pathname.split('/')[2];
-  const inProgress = localStorage.getItem('inProgressRecipes');
-  const doneRecipes = localStorage.getItem('doneRecipes');
+  const [canStart, setCanStart] = useState(true);
 
   useEffect(() => {
-    if (inProgress === null) {
-      return localStorage.setItem('inProgressRecipes', JSON.stringify({
+    const inProgress = localStorage.getItem('inProgressRecipes');
+    const doneRecipes = localStorage.getItem('doneRecipes');
+    if (!doneRecipes) {
+      localStorage.setItem('doneRecipes', JSON.stringify([]));
+    }
+    if (doneRecipes.includes(id)) {
+      setCanStart(false);
+    }
+    if (!inProgress) {
+      localStorage.setItem('inProgressRecipes', JSON.stringify({
         cocktails: {},
         meals: {},
       }));
     }
-    if (inProgress.includes(path)) {
+    if (inProgress.includes(id)) {
       setProgress(true);
     }
+  }, []);
 
-    if (doneRecipes === null) {
-      return localStorage.setItem('doneRecipes', JSON.stringify([]));
-    }
-    if (doneRecipes.includes(path)) {
-      // console.log(doneRecipes.includes(path), doneRecipes);
-      setStart(true);
-    }
-  }, [path, doneRecipes, inProgress]);
-
-  const handleClick = () => {
-    if (window.location.pathname.split('/')[1] === 'bebidas') {
-      setType('bebidas');
-    }
-    return setToRedirect(true);
-  };
-
-  const startButton = () => {
-    const btn = (
-      <div
-        style={ {
-          position: 'fixed',
-          bottom: 0,
-          height: '60px',
-          background: '#f76c05',
-          zIndex: '1',
-          alignItems: 'center',
-          width: '100%',
-          display: 'flex',
-          justifyContent: 'space-around',
-        } }
+  const startButton = () => (
+    <div className="button-to-progress">
+      <Button
+        className="button-style"
+        variant="dark"
+        style={ { position: 'fixed', bottom: 0 } }
+        data-testid="start-recipe-btn"
+        type="button"
+        onClick={ () => history.push({
+          pathname: `/${type}/${id}/in-progress`,
+          state: data }) }
       >
-        <Button
-          className="button-style"
-          variant="dark"
-          style={ { position: 'fixed', bottom: 0 } }
-          data-testid="start-recipe-btn"
-          type="button"
-          onClick={ handleClick }
-        >
-          { progress ? 'Continuar Receita' : 'Iniciar Receita' }
-        </Button>
-        {
-          toRedirect
-            && <Redirect
-              to={ `/${type}/${window.location.pathname.split('/')[2]}/in-progress` }
-              state={ mealDetail || drinkDetail }
-            />
-        }
-      </div>
-    );
-    return btn;
-  };
+        { progress ? 'Continuar Receita' : 'Iniciar Receita' }
+      </Button>
+    </div>
+  );
 
-  return !start && startButton();
+  return canStart && startButton();
 }
 
 ButtonToProgress.propTypes = {

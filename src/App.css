@@ -26,6 +26,18 @@ body {
   color: white;
 }
 
+.button-to-progress {
+  align-items: center;
+  background: #f76c05;
+  bottom: 0;
+  display: flex;
+  height: 60px;
+  justify-content: space-around;
+  position: fixed;
+  width: 100%;
+  z-index: 1;
+}
+
 .transition {
   transition: 0.5s;
 }

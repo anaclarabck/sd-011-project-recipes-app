@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { ToggleButton, ToggleButtonGroup } from 'react-bootstrap';
-import CardsRecipesFavorites from '../components/CardsRecipesFavorites';
+import CardsDoneAndFavorite from '../components/CardsDoneAndFavorite';
 import Header from '../components/Header';
 
 export default function FavoriteRecipes() {
@@ -68,11 +68,11 @@ export default function FavoriteRecipes() {
       </ToggleButtonGroup>
       <section>
         {filteredRecipes && filteredRecipes.map((recipe, index) => (
-          <CardsRecipesFavorites
+          <CardsDoneAndFavorite
             recipe={ recipe }
             index={ index }
             key={ index }
-            handleDisfavor={ handleDisfavor }
+            typeCard="favoriteRecipes"
           />
         ))}
       </section>

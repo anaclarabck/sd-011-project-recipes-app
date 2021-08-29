@@ -4,11 +4,12 @@ import '../App.css';
 import { useHistory } from 'react-router-dom';
 import { Button, Card, Form } from 'react-bootstrap';
 import ButtonShare from '../components/ButtonShare';
-import IngredientsList from '../components/RecipeInProgress/IngredientsList';
-import ButtonFinish from '../components/RecipeInProgress/ButtonFinish';
-import { InProgressProvider } from '../context/RecipeInProgress';
 import ButtonFavorite from '../components/ButtonFavorite';
-import { createRecipeData, getItemsFromObject, updateStorage, updateStorageInProgress } from '../services/functions';
+import {
+  createRecipeData,
+  getItemsFromObject,
+  updateStorage,
+  updateStorageInProgress } from '../services/functions';
 
 export default function RecipeInProgress({ location }) {
   const { state } = location;
@@ -70,12 +71,12 @@ export default function RecipeInProgress({ location }) {
               path={ `${window.location.origin}/${type}/${id}` }
               testid="share-btn"
             />
-            <ButtonFavorite objData={ state } />
+            <ButtonFavorite objData={ state } testid="favorite-btn" />
           </Card.Text>
           <Card.Text>
             <p data-testid="recipe-category">{ state.strCategory }</p>
             <Form>
-              { ingredients && ingredients.map((ingredient, index) => (
+              { ingredients.map((ingredient, index) => (
                 <div key={ index } data-testid={ `${index}-ingredient-step` }>
                   <Form.Check
                     checked={ checkSavedIngredients(ingredient) }

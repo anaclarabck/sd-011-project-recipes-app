@@ -4,7 +4,7 @@ import whiteHeartIcon from '../images/whiteHeartIcon.svg';
 import blackHeartIcon from '../images/blackHeartIcon.svg';
 import { createRecipeData, updateStorage } from '../services/functions';
 
-function ButtonFavorite({ objData }) {
+function ButtonFavorite({ objData, testid }) {
   const [favorite, setFavorite] = useState(false);
 
   useEffect(() => {
@@ -24,7 +24,7 @@ function ButtonFavorite({ objData }) {
       tabIndex="0"
     >
       <img
-        data-testid="favorite-btn"
+        data-testid={ testid }
         src={ favorite ? blackHeartIcon : whiteHeartIcon }
         alt="favorite btn"
       />

@@ -57,7 +57,7 @@ export default function DetailCard(props) {
               {details.strCategory || details.strAlcoholic }
             </Card.Text>
             <Card.Text style={ { display: 'flex', justifyContent: 'space-around' } }>
-              <ButtonFavorite objData={ details } />
+              <ButtonFavorite objData={ details } testid="favorite-btn" />
               <ButtonShare path={ window.location.href } testid="share-btn" />
             </Card.Text>
             <Card.Text>

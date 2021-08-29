@@ -54,6 +54,28 @@ body {
   width: 304px;
 }
 
+.card-favorite-done-title {
+  display: flex;
+  justify-content: space-between;
+  text-align: center;
+  width: 260px;
+}
+
+.card-done-favorite-buttons {
+  align-items: center;
+  display: flex;
+  justify-content: space-between;
+  width: 60px;
+}
+
+.cards-favorite-done-tags {
+  background: #e6e6e6;
+  border-radius: 5px;
+  font-size: 14px;
+  margin: 2px;
+  padding: 3px;
+}
+
 .container-header-filters {
   background: #ff900d;
   padding: 0 0 10px;
